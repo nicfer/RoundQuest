@@ -3,6 +3,7 @@ var speed = 5
 var jump_power = 15
 var jump_inertia = 0
 var jumping = 0
+var powerups = []
 
 func _physics_process(delta):
 	var impulse = Vector2(0,0)
@@ -11,7 +12,8 @@ func _physics_process(delta):
 	elif (Input.is_action_pressed("move_left")):
 		impulse.x = -speed
 		#apply_impulse(Vector2(speed,0),Vector2(-speed,0))
-	if (jumping == 0 and Input.is_action_pressed("move_up")):
+	if (jumping == 0 and Input.is_action_pressed("move_up")\
+			and powerups.has("jump")):
 		jumping = 1
 		jump_inertia = jump_power
 		impulse.y = -speed
@@ -26,4 +28,6 @@ func _physics_process(delta):
 			jumping = 0
 	#estados: 0=on_floor; 1=jumping;2=stopped_jump
 	apply_impulse(-impulse,impulse)
-	$Label.text = str(linear_velocity)
+	$Label.text = str(global_position)
+	if (position.y > 456):
+		$Camera2D.limit_bottom = position.y + 96

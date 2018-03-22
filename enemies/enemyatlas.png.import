@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/atlas.png-d35b63ce7bd22fe16fd5db777af03873.stex"
+path="res://.import/enemyatlas.png-f7a0ea4ed19cd5154c0121edd47f2f7a.stex"
 
 [deps]
 
-source_file="res://enemies/atlas.png"
-source_md5="7fa0ce21e38906de6c7b4facc6bdd5bb"
+source_file="res://enemies/enemyatlas.png"
+source_md5="47e1cbf5f6672602b3a0f5189525ca3c"
 
-dest_files=[ "res://.import/atlas.png-d35b63ce7bd22fe16fd5db777af03873.stex" ]
-dest_md5="2f142399b20dac64eaad88a48fffe041"
+dest_files=[ "res://.import/enemyatlas.png-f7a0ea4ed19cd5154c0121edd47f2f7a.stex" ]
+dest_md5="4810e3e0829d618c21ef6cc8d0a99bb5"
 
 [params]
 

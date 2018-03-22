@@ -16,7 +16,8 @@ config/icon="res://icon.png"
 
 [display]
 
-window/size/height=672
+window/size/width=1008
+window/size/height=576
 
 [importer_defaults]
 
