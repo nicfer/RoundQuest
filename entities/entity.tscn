@@ -1,6 +1,6 @@
 [gd_scene format=2]
 
-[node name="enemy" type="StaticBody2D"]
+[node name="entity" type="StaticBody2D" index="0"]
 
 input_pickable = false
 collision_layer = 1
@@ -14,10 +14,5 @@ bounce = 0.0
 
 region_rect = Rect2( 0, 0, 24, 24 )
 _sections_unfolded = [ "Region", "Transform" ]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="1"]
-
-build_mode = 0
-polygon = PoolVector2Array(  )
 
 

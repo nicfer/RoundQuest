@@ -2,14 +2,14 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/enemyatlas.png-f7a0ea4ed19cd5154c0121edd47f2f7a.stex"
+path="res://.import/enemyatlas.png-d1e5fad003abcd5b4de362decb531938.stex"
 
 [deps]
 
-source_file="res://enemies/enemyatlas.png"
+source_file="res://entities/enemies/enemyatlas.png"
 source_md5="47e1cbf5f6672602b3a0f5189525ca3c"
 
-dest_files=[ "res://.import/enemyatlas.png-f7a0ea4ed19cd5154c0121edd47f2f7a.stex" ]
+dest_files=[ "res://.import/enemyatlas.png-d1e5fad003abcd5b4de362decb531938.stex" ]
 dest_md5="4810e3e0829d618c21ef6cc8d0a99bb5"
 
 [params]

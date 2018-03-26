@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://entities/toggles/togglables/dissapearingBlock.gd" type="Script" id=1]
+
+[node name="dissapearingBlock" type="Node"]
+
+script = ExtResource( 1 )
+posx = 0
+posy = 0
+sequence = "-1,2"
+
+

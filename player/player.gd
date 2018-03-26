@@ -1,33 +1,70 @@
-extends RigidBody2D
-var speed = 5
-var jump_power = 15
-var jump_inertia = 0
-var jumping = 0
-var powerups = []
+extends KinematicBody2D
+
+const GRAVITY_VEC = Vector2(0, 900)
+const FLOOR_NORMAL = Vector2(0, -1)
+const SLOPE_SLIDE_STOP = 25.0
+const MIN_ONAIR_TIME = 0.1
+const WALK_SPEED = 250 # pixels/sec
+const MAX_JUMP = 50
+const JUMP_SPEED = 240
+
+var lv = Vector2()
+var onair_time = 0 #
+var on_floor = false
+var just_jumped = false
+
+var powerups = {"jump":{"level":6}}
+
+#cache the sprite here for fast access (we will set scale to flip it often)
+onready var sprite = $body
+
+func add_powerup(n):
+	powerups[n].level += 1
 
 func _physics_process(delta):
-	var impulse = Vector2(0,0)
-	if (Input.is_action_pressed("move_right")):
-		impulse.x = speed
-	elif (Input.is_action_pressed("move_left")):
-		impulse.x = -speed
-		#apply_impulse(Vector2(speed,0),Vector2(-speed,0))
-	if (jumping == 0 and Input.is_action_pressed("move_up")\
-			and powerups.has("jump")):
-		jumping = 1
-		jump_inertia = jump_power
-		impulse.y = -speed
-	if (jumping == 1):
-		jump_inertia -= 1
-		if (jump_inertia <= 0 or !Input.is_action_pressed("move_up")):
-			jumping = 2
-		else:
-			impulse.y = -jump_inertia
-	elif (jumping == 2):
-		if (linear_velocity.y == 0.0):
-			jumping = 0
-	#estados: 0=on_floor; 1=jumping;2=stopped_jump
-	apply_impulse(-impulse,impulse)
-	$Label.text = str(global_position)
-	if (position.y > 456):
-		$Camera2D.limit_bottom = position.y + 96
+
+	#increment counters
+	onair_time += delta
+
+	### MOVEMENT ###
+	# Detect Floor
+	if is_on_floor():
+		onair_time = 0
+		just_jumped = false
+
+	on_floor = onair_time < MIN_ONAIR_TIME
+
+	### CONTROL ###
+
+	# Horizontal Movement
+	var target_speed = 0
+	if Input.is_action_pressed("move_left"):
+		target_speed += -1
+	if Input.is_action_pressed("move_right"):
+		target_speed +=  1
+
+	target_speed *= WALK_SPEED
+	lv.x = lerp(lv.x, target_speed, 0.1)
+
+	# Jumping
+	var gv = GRAVITY_VEC
+	if (powerups.jump.level > 0):
+		if (on_floor and Input.is_action_just_pressed("move_up")):
+			lv.y = -JUMP_SPEED * powerups.jump.level
+			just_jumped = true
+
+	# Apply Gravity
+		if (Input.is_action_pressed("move_up")):
+			gv /= 1.75 / powerups.jump.level
+		elif (just_jumped):
+			gv *= 2.0 * powerups.jump.level
+	lv += delta * gv
+	$Label.text = str(gv)
+	# Move and Slide
+	lv = move_and_slide(lv, FLOOR_NORMAL, SLOPE_SLIDE_STOP)
+
+	$cam.check_scroll(position,lv)
+	rotate(lv.x * 0.0005)
+
+	collision_mask = 3 + int(lv.y > 0) * 6
+	collision_layer = 3 + int(lv.y > 0) * 6
